@@ -71,6 +71,41 @@ public class OcorrenciaDAO {
 		return ocorrencias;
 	}
 	
+	public List<Ocorrencia> listarOcorrenciasByPlaca(String placa) throws SQLException {
+		List<Ocorrencia> ocorrencias = new ArrayList<Ocorrencia>();
+		Ocorrencia o;
+		
+		try {
+			PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM ocorrencia WHERE placaVeiculo = ?");
+			
+			statement.setString(1, placa);
+
+			ResultSet rs = statement.executeQuery();
+		
+			while(rs.next()) {
+				o = new Ocorrencia();
+				
+				o.setPlacaVeiculo(rs.getString("placaVeiculo"));
+				o.setData(rs.getDate("data"));
+				o.setHora(rs.getTime("hora"));
+				o.setDescricao(rs.getString("descricao"));
+				
+				ocorrencias.add(o);
+			}
+			
+			rs.close();
+			
+			statement.close();
+			
+		} catch (SQLException ex) {
+			System.out.println(ex.toString());
+		}
+		
+		return ocorrencias;
+	}
+
+
+	
 	public Ocorrencia buscarOcorrencia(String placa, Date data, Time hora) throws SQLException {
 		Ocorrencia o = new Ocorrencia();
 		

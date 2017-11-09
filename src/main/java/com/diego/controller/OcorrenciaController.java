@@ -40,7 +40,7 @@ public class OcorrenciaController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.GET, params = {"data", "hora"})
 	public ResponseEntity<Ocorrencia> buscarVeiculo(@PathVariable("placa") String placa, @RequestParam("data") Date data, @RequestParam("hora") Time hora) throws SQLException {
 		Ocorrencia ocorrencia = new Ocorrencia();
 		ocorrencia = ocorrenciaDAO.buscarOcorrencia(placa, data, hora);
@@ -48,6 +48,15 @@ public class OcorrenciaController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
 		return new ResponseEntity<Ocorrencia>(ocorrencia, HttpStatus.OK);
+	}
+	
+
+	@CrossOrigin
+	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.GET)
+	public ResponseEntity<List<Ocorrencia>> listarOcorrenciasByPlaca(@PathVariable("placa") String placa) throws SQLException {
+		List<Ocorrencia> ocorrencias = new ArrayList<Ocorrencia>();
+		ocorrencias = ocorrenciaDAO.listarOcorrenciasByPlaca(placa);
+		return new ResponseEntity<List<Ocorrencia>>(ocorrencias, HttpStatus.OK);
 	}
 	
 	@CrossOrigin
