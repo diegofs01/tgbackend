@@ -14,6 +14,7 @@ import com.diego.model.Ocorrencia;
 
 public class OcorrenciaDAO {
 	private Connection connection;
+	private TipoOcorrenciaDAO tipoOcorrenciaDAO = new TipoOcorrenciaDAO();
 	
 	public OcorrenciaDAO() throws SQLException {
 		this.connection = ConnectionFactory.getConexao();
@@ -21,12 +22,13 @@ public class OcorrenciaDAO {
 	
 	public void adicionarOcorrencia(Ocorrencia o) throws SQLException {
 		try {
-			PreparedStatement statement = this.connection.prepareStatement("INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao) VALUES (?, ?, ?, ?)");
+			PreparedStatement statement = this.connection.prepareStatement("INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia) VALUES (?, ?, ?, ?, ?)");
 			
 			statement.setString(1, o.getPlacaVeiculo());
 			statement.setDate(2, o.getData());
 			statement.setTime(3, o.getHora());
 			statement.setString(4, o.getDescricao());
+			statement.setInt(5, o.getTipoOcorrencia().getId());
 			
 			statement.execute();
 			
@@ -54,6 +56,7 @@ public class OcorrenciaDAO {
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
 				o.setDescricao(rs.getString("descricao"));
+				o.setTipoOcorrencia(tipoOcorrenciaDAO.buscarTipoOcorrencia(rs.getInt("tipoOcorrencia")));
 				
 				ocorrencias.add(o);
 			}
@@ -89,6 +92,7 @@ public class OcorrenciaDAO {
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
 				o.setDescricao(rs.getString("descricao"));
+				o.setTipoOcorrencia(tipoOcorrenciaDAO.buscarTipoOcorrencia(rs.getInt("tipoOcorrencia")));
 				
 				ocorrencias.add(o);
 			}
@@ -154,12 +158,13 @@ public class OcorrenciaDAO {
 	
 	public void alterarOcorrencia(String placa, Ocorrencia o) throws SQLException {
 		try {
-			PreparedStatement statement = this.connection.prepareStatement("UPDATE ocorrencia SET descricao = ? WHERE placaVeiculo = ? AND data = ? AND hora = ?");
+			PreparedStatement statement = this.connection.prepareStatement("UPDATE ocorrencia SET descricao = ?, tipoOcorrencia = ? WHERE placaVeiculo = ? AND data = ? AND hora = ?");
 			
 			statement.setString(1, o.getDescricao());
-			statement.setString(2, placa);
-			statement.setDate(3, o.getData());
-			statement.setTime(4, o.getHora());
+			statement.setInt(2, o.getTipoOcorrencia().getId());
+			statement.setString(3, placa);
+			statement.setDate(4, o.getData());
+			statement.setTime(5, o.getHora());
 			
 			
 			statement.execute();

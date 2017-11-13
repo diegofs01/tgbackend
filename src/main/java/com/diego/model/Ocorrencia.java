@@ -10,6 +10,7 @@ public class Ocorrencia {
 	private Date data;
 	private Time hora;
 	private String descricao;
+	private TipoOcorrencia tipoOcorrencia;
 	
 	public Ocorrencia() {}
 	
@@ -17,13 +18,15 @@ public class Ocorrencia {
 			@JsonProperty("placaVeiculo") String placaVeiculo,
 			@JsonProperty("data") Date data,
 			@JsonProperty("hora") Time hora,
-			@JsonProperty("descricao") String descricao) {
+			@JsonProperty("descricao") String descricao,
+			@JsonProperty("tipoOcorrencia") TipoOcorrencia tipoOcorrencia) {
 		
 		this.placaVeiculo = placaVeiculo;
 		this.data = data;
 		this.hora = hora;
 		this.descricao = descricao;
-	}
+		this.tipoOcorrencia = tipoOcorrencia;
+	}	
 
 	public String getPlacaVeiculo() {
 		return placaVeiculo;
@@ -57,4 +60,11 @@ public class Ocorrencia {
 		this.descricao = descricao;
 	}
 
+	public TipoOcorrencia getTipoOcorrencia() {
+		return tipoOcorrencia;
+	}
+
+	public void setTipoOcorrencia(TipoOcorrencia tipoOcorrencia) {
+		this.tipoOcorrencia = tipoOcorrencia;
+	}
 }

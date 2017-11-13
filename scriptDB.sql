@@ -27,7 +27,7 @@ CREATE TABLE veiculo (
 	anoFabricacao INTEGER not null,
 	cor TEXT not null,
 	paisFabricacao TEXT not null,
-	raAluno VARCHAR(15) REFERENCES aluno(ra)
+	raAluno VARCHAR(15) REFERENCES aluno(ra)  ON DELETE CASCADE
 );
 
 CREATE TABLE tipoOcorrencia (
@@ -40,7 +40,7 @@ CREATE TABLE ocorrencia (
 	data DATE NOT NULL,
 	hora TIME NOT NULL,
 	descricao TEXT NOT NULL,
-	tipo INTEGER REFERENCES tipoOcorrencia(id),
+	tipoOcorrencia INTEGER REFERENCES tipoOcorrencia(id) ON DELETE CASCADE,
 	PRIMARY KEY (placaVeiculo, data, hora)
 );
 
@@ -65,11 +65,11 @@ INSERT INTO tipoOcorrencia (nome)
 INSERT INTO tipoOcorrencia (nome)
 	VALUES ('Outros');
 
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
 	VALUES ('JPN-1999', '2017-10-17', '12:00', 'Driftando dentro do campus', 3);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
 	VALUES ('GER-2004', '2017-10-14', '21:45', 'Estacionado ocupando 2 vagas', 2);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
 	VALUES ('USA-2005', '2017-10-11', '20:30', 'Som com alto volume', 3);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
 	VALUES ('BRA-2010', '2017-10-07', '10:55', 'Estacionado com farol aceso', 1);
