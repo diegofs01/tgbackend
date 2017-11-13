@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/TG_BACKEND-0.0.1-SNAPSHOT.jar

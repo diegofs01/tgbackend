@@ -1,11 +1,12 @@
 DROP TABLE ocorrencia;
+DROP TABLE tipoOcorrencia;
 DROP TABLE veiculo;
 DROP TABLE aluno;
 
 CREATE TABLE aluno (
 	ra VARCHAR(15) PRIMARY KEY,
 	nome TEXT NOT NULL,
-	cpf VARCHAR(15) NOT NULL,
+	cpf VARCHAR(15) UNIQUE,
 	rg VARCHAR(15) NOT NULL,
 	endereco TEXT NOT NULL,
 	numero int NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE aluno (
 );
 
 CREATE TABLE veiculo (
-	placa VARCHAR(10) primary key,
+	placa VARCHAR(10) PRIMARY KEY,
 	marca TEXT not null,
 	modelo TEXT not null,
 	anoModelo INTEGER not null,
@@ -29,11 +30,17 @@ CREATE TABLE veiculo (
 	raAluno VARCHAR(15) REFERENCES aluno(ra)
 );
 
+CREATE TABLE tipoOcorrencia (
+	id SERIAL PRIMARY KEY,
+	nome TEXT NOT NULL
+);
+
 CREATE TABLE ocorrencia (
 	placaVeiculo VARCHAR(10) REFERENCES veiculo(placa),
 	data DATE NOT NULL,
 	hora TIME NOT NULL,
 	descricao TEXT NOT NULL,
+	tipo INTEGER REFERENCES tipoOcorrencia(id),
 	PRIMARY KEY (placaVeiculo, data, hora)
 );
 
@@ -51,11 +58,18 @@ INSERT INTO veiculo (placa, marca, modelo, anoModelo, anoFabricacao, cor, paisFa
 INSERT INTO veiculo (placa, marca, modelo, anoModelo, anoFabricacao, cor, paisFabricacao, raAluno)
 	VALUES ('BRA-2010', 'Fiat', 'Uno Economy', 2010, 2010, 'Branco', 'Brasil', '0030481421044');
 	
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao)
-	VALUES ('JPN-1999', '2017-10-17', '12:00', 'Driftando dentro do campus');
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao)
-	VALUES ('GER-2004', '2017-10-14', '21:45', 'Estacionado ocupando 2 vagas');
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao)
-	VALUES ('USA-2005', '2017-10-11', '20:30', 'Som com alto volume');
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao)
-	VALUES ('BRA-2010', '2017-10-07', '10:55', 'Estacionado com farol aceso');
+INSERT INTO tipoOcorrencia (nome)
+	VALUES ('Farol Aceso');
+INSERT INTO tipoOcorrencia (nome)
+	VALUES ('Estacionado em Local Errado');
+INSERT INTO tipoOcorrencia (nome)
+	VALUES ('Outros');
+
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+	VALUES ('JPN-1999', '2017-10-17', '12:00', 'Driftando dentro do campus', 3);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+	VALUES ('GER-2004', '2017-10-14', '21:45', 'Estacionado ocupando 2 vagas', 2);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+	VALUES ('USA-2005', '2017-10-11', '20:30', 'Som com alto volume', 3);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipo)
+	VALUES ('BRA-2010', '2017-10-07', '10:55', 'Estacionado com farol aceso', 1);
