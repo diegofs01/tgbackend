@@ -127,6 +127,7 @@ public class OcorrenciaDAO {
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
 				o.setDescricao(rs.getString("descricao"));
+				o.setTipoOcorrencia(tipoOcorrenciaDAO.buscarTipoOcorrencia(rs.getInt("tipoOcorrencia")));
 			}
 			
 			rs.close();
