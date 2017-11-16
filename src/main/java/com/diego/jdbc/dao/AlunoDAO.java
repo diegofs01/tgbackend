@@ -19,7 +19,7 @@ public class AlunoDAO {
 	
 	public void adicionarAluno(Aluno aluno) throws SQLException {
 		try  {
-			PreparedStatement statement = this.connection.prepareStatement("INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement statement = this.connection.prepareStatement("INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular, email, idCurso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			statement.setString(1, aluno.getRa());
 			statement.setString(2, aluno.getNome());
@@ -34,6 +34,8 @@ public class AlunoDAO {
 			statement.setString(11, aluno.getCep());
 			statement.setString(12, aluno.getNumeroTelefone());
 			statement.setString(13, aluno.getNumeroCelular());
+			statement.setString(14, aluno.getEmail());
+			statement.setInt(15, aluno.getIdCurso());
 			
 			statement.execute();
 			
@@ -70,6 +72,8 @@ public class AlunoDAO {
 				aluno.setCep(rs.getString("cep"));
 				aluno.setNumeroTelefone(rs.getString("numeroTelefone"));
 				aluno.setNumeroCelular(rs.getString("numeroCelular"));
+				aluno.setEmail(rs.getString("email"));
+				aluno.setIdCurso(rs.getInt("idCurso"));
 				
 				alunos.add(aluno);
 			}
@@ -111,6 +115,8 @@ public class AlunoDAO {
 				aluno.setCep(rs.getString("cep"));
 				aluno.setNumeroTelefone(rs.getString("numeroTelefone"));
 				aluno.setNumeroCelular(rs.getString("numeroCelular"));
+				aluno.setEmail(rs.getString("email"));
+				aluno.setIdCurso(rs.getInt("idCurso"));
 			}
 			
 			rs.close();
@@ -144,7 +150,7 @@ public class AlunoDAO {
 	
 	public void alterarAluno(String ra, Aluno aluno) throws SQLException {
 		try  {
-			PreparedStatement statement = this.connection.prepareStatement("UPDATE aluno SET nome = ?, cpf = ?, rg = ?, endereco = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, estado = ?, cep = ?, numeroTelefone = ?, numeroCelular = ? WHERE ra = ?");
+			PreparedStatement statement = this.connection.prepareStatement("UPDATE aluno SET nome = ?, cpf = ?, rg = ?, endereco = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, estado = ?, cep = ?, numeroTelefone = ?, numeroCelular = ?, email = ?, idCurso = ? WHERE ra = ?");
 			
 			statement.setString(1, aluno.getNome());
 			statement.setString(2, aluno.getCpf());
@@ -158,7 +164,9 @@ public class AlunoDAO {
 			statement.setString(10, aluno.getCep());
 			statement.setString(11, aluno.getNumeroTelefone());
 			statement.setString(12, aluno.getNumeroCelular());
-			statement.setString(13, ra);
+			statement.setString(13, aluno.getEmail());
+			statement.setInt(14, aluno.getIdCurso());
+			statement.setString(15, ra);
 			
 			statement.execute();
 			

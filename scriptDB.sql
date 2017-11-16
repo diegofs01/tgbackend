@@ -2,6 +2,12 @@ DROP TABLE ocorrencia;
 DROP TABLE tipoOcorrencia;
 DROP TABLE veiculo;
 DROP TABLE aluno;
+DROP TABLE curso;
+
+CREATE TABLE curso (
+	id SERIAL PRIMARY KEY,
+	nome TEXT NOT NULL
+);
 
 CREATE TABLE aluno (
 	ra VARCHAR(15) PRIMARY KEY,
@@ -16,7 +22,9 @@ CREATE TABLE aluno (
 	estado TEXT NOT NULL,
 	cep VARCHAR(10) NOT NULL,
 	numeroTelefone VARCHAR(15),
-	numeroCelular VARCHAR(15)
+	numeroCelular VARCHAR(15),
+	email VARCHAR(50) NOT NULL,
+	idCurso INTEGER references curso(id) ON DELETE CASCADE
 );
 
 CREATE TABLE veiculo (
@@ -27,7 +35,7 @@ CREATE TABLE veiculo (
 	anoFabricacao INTEGER not null,
 	cor TEXT not null,
 	paisFabricacao TEXT not null,
-	raAluno VARCHAR(15) REFERENCES aluno(ra)  ON DELETE CASCADE
+	raAluno VARCHAR(15) REFERENCES aluno(ra) ON DELETE CASCADE
 );
 
 CREATE TABLE tipoOcorrencia (
@@ -44,10 +52,15 @@ CREATE TABLE ocorrencia (
 	PRIMARY KEY (placaVeiculo, data, hora)
 );
 
-INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular)
-	VALUES('0030481421044', 'Valter Massashi Akashi', '439.920.230-20', '13.312.430-0', 'Liberdade', '50', '', 'Seul', 'Piedade', 'São Paulo', '19023-203', '(15) 3224-3453', '(15) 99649-2390');
-INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular)
-	VALUES('0030481421048', 'Diego Ferreira Silva', '450.059.448-50', '48.716.409-X', 'Bonifacio de Oliveira Cassu', 80, 'Pista de Skate', 'Éden', 'Sorocaba', 'São Paulo', '18103-100', '(15) 3325-2638', '(15) 99751-3436');
+INSERT INTO curso (nome) 
+	VALUES('ADS');
+INSERT INTO curso (nome)
+	VALUES('Log');
+
+INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular, email, idCurso)
+	VALUES('0030481421044', 'Valter Massashi Akashi', '439.920.230-20', '13.312.430-0', 'Liberdade', '50', '', 'Seul', 'Piedade', 'São Paulo', '19023-203', '(15) 3224-3453', '(15) 99649-2390', 'massashi.akashi@hotmail.com', 1);
+INSERT INTO aluno (ra, nome, cpf, rg, endereco, numero, complemento, bairro, cidade, estado, cep, numeroTelefone, numeroCelular, email, idCurso)
+	VALUES('0030481421048', 'Diego Ferreira Silva', '450.059.448-50', '48.716.409-X', 'Bonifacio de Oliveira Cassu', 80, 'Pista de Skate', 'Éden', 'Sorocaba', 'São Paulo', '18103-100', '(15) 3325-2638', '(15) 99751-3436', 'diegofs01@hotmail.com', 1);
 
 INSERT INTO veiculo (placa, marca, modelo, anoModelo, anoFabricacao, cor, paisFabricacao, raAluno)
 	VALUES ('JPN-1999', 'Nissan', 'Skyline GTR R34', 1999, 1999, 'Cinza', 'Japão', '0030481421044');

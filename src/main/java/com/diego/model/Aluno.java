@@ -16,6 +16,8 @@ public class Aluno {
 	private String cep;
 	private String numeroTelefone;
 	private String numeroCelular;
+	private String email;
+	private int idCurso;
 	
 	public Aluno() {}
 	
@@ -32,7 +34,9 @@ public class Aluno {
 			@JsonProperty("estado") String estado,
 			@JsonProperty("cep") String cep,
 			@JsonProperty("numeroTelefone") String numeroTelefone,
-			@JsonProperty("numeroCelular") String numeroCelular) {
+			@JsonProperty("numeroCelular") String numeroCelular,
+			@JsonProperty("email") String email,
+			@JsonProperty("idCurso") int idCurso) {
 		
 		this.ra = ra;
 		this.nome = nome;
@@ -47,6 +51,8 @@ public class Aluno {
 		this.cep = cep;
 		this.numeroTelefone = numeroTelefone;
 		this.numeroCelular = numeroCelular;
+		this.email = email;
+		this.idCurso = idCurso;
 	}
 	
 	public String getRa() {
@@ -127,5 +133,17 @@ public class Aluno {
 	public void setNumeroCelular(String numeroCelular) {
 		this.numeroCelular = numeroCelular;
 	}
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getIdCurso() {
+		return idCurso;
+	}
+	public void setIdCurso(int idCurso) {
+		this.idCurso = idCurso;
+	}
+	
 }
