@@ -23,7 +23,7 @@ CREATE TABLE aluno (
 	cep VARCHAR(10) NOT NULL,
 	numeroTelefone VARCHAR(15),
 	numeroCelular VARCHAR(15),
-	email VARCHAR(50) NOT NULL,
+	email VARCHAR(50),
 	idCurso INTEGER references curso(id) ON DELETE CASCADE
 );
 
