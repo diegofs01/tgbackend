@@ -1,9 +1,7 @@
 package com.diego.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diego.jdbc.dao.OcorrenciaDAO;
@@ -40,10 +37,10 @@ public class OcorrenciaController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.GET, params = {"data", "hora"})
-	public ResponseEntity<Ocorrencia> buscarVeiculo(@PathVariable("placa") String placa, @RequestParam("data") Date data, @RequestParam("hora") Time hora) throws SQLException {
+	@RequestMapping(value = "/api/ocorrencia/{numero}", method = RequestMethod.GET)
+	public ResponseEntity<Ocorrencia> buscarVeiculo(@PathVariable("numero") int numero) throws SQLException {
 		Ocorrencia ocorrencia = new Ocorrencia();
-		ocorrencia = ocorrenciaDAO.buscarOcorrencia(placa, data, hora);
+		ocorrencia = ocorrenciaDAO.buscarOcorrencia(numero);
 		if(ocorrencia == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);			
 		}
@@ -52,7 +49,7 @@ public class OcorrenciaController {
 	
 
 	@CrossOrigin
-	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/ocorrencia/placa/{placa}", method = RequestMethod.GET)
 	public ResponseEntity<List<Ocorrencia>> listarOcorrenciasByPlaca(@PathVariable("placa") String placa) throws SQLException {
 		List<Ocorrencia> ocorrencias = new ArrayList<Ocorrencia>();
 		ocorrencias = ocorrenciaDAO.listarOcorrenciasByPlaca(placa);
@@ -67,16 +64,16 @@ public class OcorrenciaController {
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.PUT)
-	public ResponseEntity<Ocorrencia> alterarOcorrencia(@PathVariable("placa") String placa, @RequestBody Ocorrencia ocorrencia) throws JsonParseException, JsonMappingException, IOException, SQLException {
-		ocorrenciaDAO.alterarOcorrencia(placa, ocorrencia);
+	@RequestMapping(value = "/api/ocorrencia/{numero}", method = RequestMethod.PUT)
+	public ResponseEntity<Ocorrencia> alterarOcorrencia(@PathVariable("numero") int numero, @RequestBody Ocorrencia ocorrencia) throws JsonParseException, JsonMappingException, IOException, SQLException {
+		ocorrenciaDAO.alterarOcorrencia(numero, ocorrencia);
 		return new ResponseEntity<Ocorrencia>(ocorrencia, HttpStatus.CREATED);
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value = "/api/ocorrencia/{placa}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> excluirOcorrencia(@PathVariable("placa") String placa, @RequestParam("data") Date data, @RequestParam("hora") Time hora) throws SQLException {
-		ocorrenciaDAO.excluirOcorrencia(placa, data, hora);
+	@RequestMapping(value = "/api/ocorrencia/{numero}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> excluirOcorrencia(@PathVariable("numero") int numero) throws SQLException {
+		ocorrenciaDAO.excluirOcorrencia(numero);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

@@ -1,11 +1,9 @@
 package com.diego.jdbc.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +50,7 @@ public class OcorrenciaDAO {
 			while(rs.next()) {
 				o = new Ocorrencia();
 				
+				o.setNumero(rs.getInt("numero"));
 				o.setPlacaVeiculo(rs.getString("placaVeiculo"));
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
@@ -88,6 +87,7 @@ public class OcorrenciaDAO {
 			while(rs.next()) {
 				o = new Ocorrencia();
 				
+				o.setNumero(rs.getInt("numero"));
 				o.setPlacaVeiculo(rs.getString("placaVeiculo"));
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
@@ -108,21 +108,18 @@ public class OcorrenciaDAO {
 		return ocorrencias;
 	}
 
-
-	
-	public Ocorrencia buscarOcorrencia(String placa, Date data, Time hora) throws SQLException {
+	public Ocorrencia buscarOcorrencia(int numero) throws SQLException {
 		Ocorrencia o = new Ocorrencia();
 		
 		try { 
-			PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM ocorrencia WHERE placaVeiculo = ? AND data = ? AND hora = ?");
+			PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM ocorrencia WHERE numero = ?");
 			
-			statement.setString(1, placa);
-			statement.setDate(2, data);
-			statement.setTime(3, hora);
+			statement.setInt(1, numero);
 			
 			ResultSet rs = statement.executeQuery();
 			
 			if(rs.next()) {
+				o.setNumero(rs.getInt("numero"));
 				o.setPlacaVeiculo(rs.getString("placaVeiculo"));
 				o.setData(rs.getDate("data"));
 				o.setHora(rs.getTime("hora"));
@@ -140,13 +137,11 @@ public class OcorrenciaDAO {
 		return o;
 	}
 	
-	public void excluirOcorrencia(String placa, Date data, Time hora) throws SQLException {
+	public void excluirOcorrencia(int numero) throws SQLException {
 		try  {
-			PreparedStatement statement = this.connection.prepareStatement("DELETE FROM ocorrencia WHERE placaVeiculo = ? AND data = ? AND hora = ?");
+			PreparedStatement statement = this.connection.prepareStatement("DELETE FROM ocorrencia WHERE numero = ?");
 			
-			statement.setString(1, placa);
-			statement.setDate(2, data);
-			statement.setTime(3, hora);
+			statement.setInt(1, numero);
 			
 			statement.execute();
 			
@@ -157,16 +152,13 @@ public class OcorrenciaDAO {
 		}
 	}
 	
-	public void alterarOcorrencia(String placa, Ocorrencia o) throws SQLException {
+	public void alterarOcorrencia(int numero, Ocorrencia o) throws SQLException {
 		try {
-			PreparedStatement statement = this.connection.prepareStatement("UPDATE ocorrencia SET descricao = ?, tipoOcorrencia = ? WHERE placaVeiculo = ? AND data = ? AND hora = ?");
+			PreparedStatement statement = this.connection.prepareStatement("UPDATE ocorrencia SET descricao = ?, tipoOcorrencia = ? WHERE numero = ?");
 			
 			statement.setString(1, o.getDescricao());
 			statement.setInt(2, o.getTipoOcorrencia().getId());
-			statement.setString(3, placa);
-			statement.setDate(4, o.getData());
-			statement.setTime(5, o.getHora());
-			
+			statement.setInt(3, numero);
 			
 			statement.execute();
 			
