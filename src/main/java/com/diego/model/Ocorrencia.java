@@ -12,6 +12,7 @@ public class Ocorrencia {
 	private Time hora;
 	private String descricao;
 	private TipoOcorrencia tipoOcorrencia;
+	private boolean veiculoCadastrado;
 	
 	public Ocorrencia() {}
 	
@@ -21,7 +22,8 @@ public class Ocorrencia {
 			@JsonProperty("data") Date data,
 			@JsonProperty("hora") Time hora,
 			@JsonProperty("descricao") String descricao,
-			@JsonProperty("tipoOcorrencia") TipoOcorrencia tipoOcorrencia) {
+			@JsonProperty("tipoOcorrencia") TipoOcorrencia tipoOcorrencia,
+			@JsonProperty("veiculoCadastrado") boolean veiculoCadastrado) {
 		
 		this.numero = numero;
 		this.placaVeiculo = placaVeiculo;
@@ -29,6 +31,7 @@ public class Ocorrencia {
 		this.hora = hora;
 		this.descricao = descricao;
 		this.tipoOcorrencia = tipoOcorrencia;
+		this.veiculoCadastrado = veiculoCadastrado;
 	}
 	
 	public int getNumero() {
@@ -78,4 +81,13 @@ public class Ocorrencia {
 	public void setTipoOcorrencia(TipoOcorrencia tipoOcorrencia) {
 		this.tipoOcorrencia = tipoOcorrencia;
 	}
+
+	public boolean isVeiculoCadastrado() {
+		return veiculoCadastrado;
+	}
+
+	public void setVeiculoCadastrado(boolean veiculoCadastrado) {
+		this.veiculoCadastrado = veiculoCadastrado;
+	}
+	
 }

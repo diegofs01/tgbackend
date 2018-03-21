@@ -46,7 +46,6 @@ public class OcorrenciaController {
 		}
 		return new ResponseEntity<Ocorrencia>(ocorrencia, HttpStatus.OK);
 	}
-	
 
 	@CrossOrigin
 	@RequestMapping(value = "/api/ocorrencia/placa/{placa}", method = RequestMethod.GET)
@@ -75,5 +74,11 @@ public class OcorrenciaController {
 	public ResponseEntity<?> excluirOcorrencia(@PathVariable("numero") int numero) throws SQLException {
 		ocorrenciaDAO.excluirOcorrencia(numero);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/api/ocorrencia/verificarVeiculo/{placa}", method = RequestMethod.GET)
+	public ResponseEntity<Integer> verificarVeiculo(@PathVariable("placa") String placa) throws SQLException {
+		return new ResponseEntity<Integer>(ocorrenciaDAO.verificarVeiculo(placa), HttpStatus.OK);
 	}
 }

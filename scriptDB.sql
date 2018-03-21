@@ -45,11 +45,12 @@ CREATE TABLE tipoOcorrencia (
 
 CREATE TABLE ocorrencia (
 	numero SERIAL PRIMARY KEY,
-	placaVeiculo VARCHAR(10) REFERENCES veiculo(placa),
+	placaVeiculo VARCHAR(10),
 	data DATE NOT NULL,
 	hora TIME NOT NULL,
 	descricao TEXT NOT NULL,
-	tipoOcorrencia INTEGER REFERENCES tipoOcorrencia(id) ON DELETE CASCADE
+	tipoOcorrencia INTEGER REFERENCES tipoOcorrencia(id) ON DELETE CASCADE,
+	veiculoCadastrado BOOLEAN NOT NULL
 );
 
 INSERT INTO curso (nome) 
@@ -78,11 +79,11 @@ INSERT INTO tipoOcorrencia (nome)
 INSERT INTO tipoOcorrencia (nome)
 	VALUES ('Estacionado em Local Errado');
 
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
-	VALUES ('JPN-1999', '2017-10-17', '12:00', 'Driftando dentro do campus', 1);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
-	VALUES ('GER-2004', '2017-10-14', '21:45', 'Estacionado ocupando 2 vagas', 3);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
-	VALUES ('USA-2005', '2017-10-11', '20:30', 'Som com alto volume', 1);
-INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia)
-	VALUES ('BRA-2010', '2017-10-07', '10:55', 'Estacionado com farol aceso', 2);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia, veiculoCadastrado)
+	VALUES ('JPN-1999', '2017-10-17', '12:00', 'Driftando dentro do campus', 1, true);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia, veiculoCadastrado)
+	VALUES ('GER-2004', '2017-10-14', '21:45', 'Estacionado ocupando 2 vagas', 3, true);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia, veiculoCadastrado)
+	VALUES ('USA-2005', '2017-10-11', '20:30', 'Som com alto volume', 1, true);
+INSERT INTO ocorrencia (placaVeiculo, data, hora, descricao, tipoOcorrencia, veiculoCadastrado)
+	VALUES ('BRA-2010', '2017-10-07', '10:55', 'Estacionado com farol aceso', 2, true);
